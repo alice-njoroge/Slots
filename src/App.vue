@@ -115,17 +115,17 @@ const AppButton = defineAsyncComponent({
 
         </Suspense>
 
-        <button
-          class="movie-actions-list-action-button"
+        <AppButton
           :class="{
             'button-primary': !showMovieForm,
             'button-disabled': showMovieForm,
           }"
           @click="showForm"
           :disabled="showMovieForm"
+          type="button"
         >
           Add Movie
-        </button>
+        </AppButton>
       </div>
     </div>
     <div class="movie-list">

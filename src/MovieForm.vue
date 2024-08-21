@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from "vue";
+import CustomInput from "@/components/customInput.vue";
 
 const emit = defineEmits(["update:modelValue", "cancel"]);
 const props = defineProps({
@@ -118,16 +119,10 @@ function clearErrors() {
       />
       <span class="movie-form-error">{{ errors.description }}</span>
     </div>
-    <div class="movie-form-input-wrapper">
-      <label for="image">Image</label>
-      <input
-        type="text"
-        name="image"
-        v-model="form.image"
-        class="movie-form-input"
-      />
-      <span class="movie-form-error">{{ errors.image }}</span>
-    </div>
+    <CustomInput type="text" name="image" v-model="form.image" >
+      <template #label>Image</template>
+      <template #err-span>{{errors.image}}</template>
+    </CustomInput>
     <div class="movie-form-input-wrapper">
       <label for="genre">Genres</label>
       <select

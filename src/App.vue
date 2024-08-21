@@ -2,8 +2,9 @@
 import MovieForm from "@/MovieForm.vue";
 import MovieItem from "@/MovieItem.vue";
 import { items } from "./movies.json";
-import { computed, ref } from "vue";
-import AppModal from "@/AppModal.vue";
+import {computed, defineAsyncComponent, ref} from "vue";
+import AppModal from "@/components/AppModal.vue";
+
 const movies = ref(items);
 const currentMovie = ref();
 function updateRating(id, rating) {
@@ -66,6 +67,10 @@ function removeRatings() {
     return movie;
   });
 }
+const AppButton = defineAsyncComponent({
+  loader: ()=>import('./components/AppButton.vue'),
+  delay: 200
+});
 </script>
 
 <template>
@@ -87,12 +92,29 @@ function removeRatings() {
       </div>
       <div class="flex-spacer"></div>
       <div class="movie-actions-list-actions">
-        <button
-          class="self-end movie-actions-list-action-button button-primary justify-self-end"
+        <AppButton
           @click="removeRatings"
+          :disabled="false"
+          type="button"
         >
           Remove Ratings
-        </button>
+        </AppButton>
+
+        <Suspense>
+          <AppButton
+              @click="removeRatings"
+              :disabled="false"
+              type="button"
+          >
+            Remove Ratings Suspense 🍟
+          </AppButton>
+          <!-- loading state via #fallback slot -->
+          <template #fallback>
+            Loading...
+          </template>
+
+        </Suspense>
+
         <button
           class="movie-actions-list-action-button"
           :class="{
